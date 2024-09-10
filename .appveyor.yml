@@ -19,7 +19,7 @@ init:
 
 # Скачивание зависимостей и сборка проекта
 build_script:
-  - gradle clean build                           # Сборка проекта
+  - ./gradlew clean build                           # Сборка проекта
 
 # Поднимаем необходимые Docker сервисы перед тестированием
 before_test:
@@ -29,12 +29,13 @@ before_test:
 test_script:
   # Подождем, пока контейнеры поднимутся
   - sleep 10
+  - java -jar artifacts/aqa-shop.jar
 
   # Выполняем тесты через Gradle
-  - gradle test
+  - ./gradlew test
 
   # Или можно запускать JAR файл, если есть задача для его создания
-  # - java -jar build/libs/your-project.jar
+  
 
 # Завершаем работу контейнеров после тестов
 after_test:
