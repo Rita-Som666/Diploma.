@@ -6,37 +6,14 @@ branches:
   only:
     - main  # ветка git
 
-environment:
-  GRADLE_USER_HOME: $HOME/.gradle
-  JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+build: off  # будем использовать свой скрипт сборки
 
-# Устанавливаем зависимости перед сборкой
-init:
-  - sudo apt-get update
-  - sudo apt-get install -y openjdk-11-jdk       # Установка Java 11
-  - sudo apt-get install -y gradle               # Установка Gradle
-  - sudo apt-get install -y docker-compose       # Установка Docker Compose
+install:
+  # запускаем SUT (& означает, что в фоновом режиме не блокируем терминал для запуска тестов)
+  - docker-compose up -d
+  - sleep 30
+  - java -jar ./artifacts/aqa-shop.jar &
+  - chmod +x gradlew
 
-# Скачивание зависимостей и сборка проекта
 build_script:
-  - ./gradlew clean build                           # Сборка проекта
-
-# Поднимаем необходимые Docker сервисы перед тестированием
-before_test:
-  - docker-compose up -d                         # Запуск Docker Compose
-
-# Выполняем тесты
-test_script:
-  # Подождем, пока контейнеры поднимутся
-  - sleep 10
-  - java -jar artifacts/aqa-shop.jar
-
-  # Выполняем тесты через Gradle
-  - ./gradlew test
-
-  # Или можно запускать JAR файл, если есть задача для его создания
-  
-
-# Завершаем работу контейнеров после тестов
-after_test:
-  - docker-compose down
+  - ./gradlew test --info -Dselenide.headless=true
