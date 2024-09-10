@@ -15,11 +15,11 @@ install:
 build_script:
   - ./gradlew clean build
 
-  before_test:
+before_test:
   - docker-compose up -d
   - java -jar ./artifacts/aqa-shop.jar &
 
-  test_script:
+test_script:
   # Подождем, пока контейнеры поднимутся
   - sleep 10
   - ./gradlew test
