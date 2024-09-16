@@ -7,11 +7,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.data.CardGenerator;
 import ru.netology.page.BuyPage;
 import ru.netology.page.CreditPage;
 import ru.netology.page.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static ru.netology.data.CardGenerator.*;
+
+
 
 public class AqaShopTest {
 
@@ -43,7 +47,7 @@ public class AqaShopTest {
         var mainPage = new MainPage();
         mainPage.payByCard();
         var buy = new BuyPage();
-        buy.successBuy();
+        buy.sendForm(generateData(cardNumber(validCardNumber(), name(randomName()), month(1), year(1), cvv(cvc1()))));
 
     }
 
@@ -53,7 +57,7 @@ public class AqaShopTest {
         var mainPage = new MainPage();
         mainPage.payByCard();
         var buy = new BuyPage();
-        buy.blockStatus();
+        buy.sendForm();
     }
 
     @Test

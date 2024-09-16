@@ -12,131 +12,110 @@ import java.util.Random;
 @Value
 public class CardGenerator {
 
-    Faker faker;
-
-    private CardGenerator(){
-        this.faker = new Faker(new Locale("en"));
+    public static String name(String name){
+        return name;
     }
 
-    private static String randomName (){
+    public static String randomName (){
         Faker faker = new Faker(new Locale("en"));
         return faker.name().firstName()+" "+faker.name().lastName();
 
     }
 
-    private static String invalidName1(){
+   public   static String firstName(){
         Faker faker = new Faker(new Locale("en"));
         return faker.name().firstName();
 
     }
 
-    private static String invalidName2(){
+   public   static String rusName(){
         Faker faker = new Faker(new Locale("ru"));
         return faker.name().firstName()+" "+faker.name().lastName();
 
     }
 
-    private static String invalidName3(){
+   public   static String nameWitsDigit(){
         return "ivan1 ivanov";
 
     }
 
-    private static String invalidName4(){
+   public   static String naneWithSymbol(){
         return "ivan ivanov.";
 
     }
 
-    private static String month(){
+   public static String month(int plusMonths){
 
-        return LocalDate.now().plusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
+        return LocalDate.now().plusMonths(plusMonths).format(DateTimeFormatter.ofPattern("MM"));
     }
 
-    private static String year(){
+   public   static String year(int plusYears){
 
-        return LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("yy"));
+        return LocalDate.now().plusYears(plusYears).format(DateTimeFormatter.ofPattern("yy"));
     }
 
-    private static String invalidYear1(){
-
-        return LocalDate.now().plusYears(6).format(DateTimeFormatter.ofPattern("yy"));
+   public   static String cardNumber(String cardNumber){
+        return cardNumber;
     }
 
-    private static String invalidYear2(){
 
-        return LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("yy"));
-    }
-
-    private static String nowYear(){
-
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("yy"));
-    }
-
-    private static String invalidMonth(){
-
-        return LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
-    }
-
-    private static String validCardNumber(){
+   public   static String validCardNumber(){
 
         return "4444444444444441";
     }
 
-    private static String invalidCardNumber1(){
+   public   static String invalidCardNumber1(){
 
         return "4444444444444442";
     }
 
-    private static String invalidCardNumber2(){
+   public   static String invalidCardNumber2(){
 
         Faker faker = new Faker();
 
         return faker.finance().creditCard();
     }
 
-    private static String cvc(){
+   public   static String cvv(String cvv){
+        return cvv;
+    }
+
+   public static String cvc1(){
             Random random = new Random();
             return String.valueOf(100 + random.nextInt(900));
     }
 
-    private static String invalidCvc(){
+   public   static String invalidCvc(){
         Random random = new Random();
         return String.valueOf(10 + random.nextInt(90));
     }
 
 
-    public static CardData validData(){
-        return new CardData(validCardNumber(), randomName(), month(), year(), cvc());
+/*    public static CardData validData(int month, int year){
+        return new CardData(validCardNumber(), name(randomName()), month(month), year(year), cvc());
     }
 
-    public static CardData invalidStatus(){
-        return new CardData(invalidCardNumber1(), randomName(),month(), year(),cvc());
+    public static CardData invalidStatus(int month, int year){
+        return new CardData(invalidCardNumber1(), randomName(),month(month), year(year),cvc());
     }
 
-    public static CardData invalidData(){
-        return new CardData(invalidCardNumber2(), randomName(),month(), year(),cvc());
+    public static CardData invalidData(int month, int year){
+        return new CardData(invalidCardNumber2(), randomName(),month(month), year(year),cvc());
     }
 
-    public static CardData invalidDate1(){
-        return new CardData(validCardNumber(), randomName(), invalidMonth(), nowYear(),cvc());
+    public static CardData invalidDate1(int month, int year){
+        return new CardData(validCardNumber(), randomName(), month(month), year(year),cvc());
     }
 
-    public static CardData invalidDate2(){
-        return new CardData(validCardNumber(), randomName(), month(), invalidYear2(),cvc());
+    public static CardData invalidUser1(int month, int year){
+        return new CardData(validCardNumber(), invalidName1(), month(1), year(1), cvc());
+    }*/
+
+    public static CardData generateData(String cardNumber, int month, int year, String name, String cvv){
+        return new CardData(cardNumber(cardNumber), name(name), month(month), year(year), cvv(cvv));
     }
 
-    public static CardData invalidDate3(){
-        return new CardData(validCardNumber(), randomName(), month(), invalidYear1(),cvc());
-    }
-
-    public static CardData invalidUser1(){
-        return new CardData(validCardNumber(), invalidName1(), month(), year(), cvc());
-    }
-
-    public static CardData invalidUser2(){
-        return new CardData(validCardNumber(), invalidName2(), month(), year(), cvc());
-    }
-
-    public static CardData invalidUser3(){
+    /*public static CardData invalidUser3(){
         return new CardData(validCardNumber(), invalidName3(), month(), year(), cvc());
     }
 
@@ -146,5 +125,5 @@ public class CardGenerator {
 
     public static CardData invalidCvv(){
         return new CardData(validCardNumber(), randomName(), month(), year(), invalidCvc());
-    }
+    }*/
 }

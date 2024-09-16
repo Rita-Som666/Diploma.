@@ -34,7 +34,7 @@ public class CreditPage {
     private final SelenideElement successSend = $(byText("Операция одобрена Банком."));
     private final SelenideElement errorSend = $(byText("Ошибка! Банк отказал в проведении операции."));
 
-    private final CardData validUser = CardGenerator.validData();
+   /* private final CardData validUser = CardGenerator.validData();
     private final CardData invalidUser1 = CardGenerator.invalidStatus();
     private final CardData invalidUser2 = CardGenerator.invalidDate1();
     private final CardData invalidUser3 = CardGenerator.invalidDate2();
@@ -45,13 +45,13 @@ public class CreditPage {
     private final CardData invalidUser8 = CardGenerator.invalidUser4();
     private final CardData invalidUser9 = CardGenerator.invalidCvv();
     private final CardData invalidUser10 = CardGenerator.invalidData();
-
+*/
 
     public CreditPage(){
         payByCredit.shouldBe(Condition.visible);
     }
 
-    public void successBuy (){
+   /* public void successBuy (){
         cardNumber.sendKeys(validUser.getCardNumber());
         month.sendKeys(validUser.getMonth());
         year.sendKeys(validUser.getYear());
@@ -210,5 +210,13 @@ public class CreditPage {
     public void blankForm(){
         send.click();
         $$(withText("Поле обязательно для заполнения")).shouldHave(size(5));
+    }*/
+
+    public void sendForm(CardData cardData){
+        cardNumber.sendKeys(cardData.getCardNumber());
+        month.sendKeys(cardData.getMonth());
+        year.sendKeys(cardData.getYear());
+        name.sendKeys(cardData.getName());
+        send.click();
     }
 }

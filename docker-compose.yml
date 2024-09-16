@@ -22,6 +22,8 @@ services:
           - MYSQL_DATABASE=app
           - MYSQL_USER=user
           - MYSQL_PASSWORD=password
+    volumes:
+      - ./gate-simulator/data.json:/docker-entrypoint-initdb.d/data.json
 
 
   gate-simulator:
